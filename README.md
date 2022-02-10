@@ -1,6 +1,20 @@
 # TheCodingTrain
 # # Code Challenges for TheCodingTrain.com implemented in Vlang
 
+## Setup
+
+I am using vim and Nixos.
+
+To enter a development shell, I run
+
+    nix-shell -p xorg.libX11 xorg.libXfixes xorg.libXi xorg.libXext xorg.libXcursor libGL openssl zlib
+
+Compile v from source as documented here: https://github.com/vlang/v
+
+Works like a charm.
+
+## List of Challenges
+
 - [X] CC_001_StarField
 - [ ] CC_002_MengerSponge
 - [ ] CC_003_Snake_game
