@@ -22,35 +22,25 @@ mut:
 	newgrid   [][]int     = [][]int{len: xsize, init: []int{len: ysize}}
 }
 
-fn neighbor_count(array [][]int, xn int, yn int) int {
+fn neighbor_count(array [][]int, xo int, yo int) int {
 	mut sum := 0
-	x := (xn + xsize) % xsize
-	y := (yn + ysize) % ysize
-	if x>0 && y>0 {
-		sum += array[x-1][y-1]
-	}
-	if y>0 && x<xsize-1{
-		sum += array[x+1][y-1]
-	}
-	if x>0 && y<ysize-1 {
-		sum += array[x-1][y+1]
-	}
-	if x<xsize-1 && y<ysize-1 {
-		sum += array[x+1][y+1]
-	}
 
-	if x > 0 {
-		sum += array[x-1][y]
-	}
-	if x < xsize-1 {
-		sum += array[x+1][y]
-	}
-	if y>0 {
-		sum += array[x  ][y-1]
-	}
-	if y<ysize-1 {
-		sum += array[x  ][y+1]
-	}
+	// Computed wrapped coords.
+	xp := (xo + 1)%xsize
+	xm := (xo - 1 + xsize)%xsize
+	yp := (yo + 1)%ysize
+	ym := (yo - 1 + ysize)%ysize
+
+	sum += array[xm][ym]
+	sum += array[xp][ym]
+	sum += array[xm][yp]
+	sum += array[xp][yp]
+
+	sum += array[xm][yo]
+	sum += array[xp][yo]
+	sum += array[xo][ym]
+	sum += array[xo][yp]
+
 	return sum
 }
 fn on_frame(mut app App) {
@@ -70,22 +60,16 @@ fn on_frame(mut app App) {
 		}
 	}
 	
-	// Clear new grid
-	for i in 0 .. xsize {
-		for j in 0 .. ysize {
-			app.newgrid[i][j] = 0
-		}
-	}
 	// Compute next generation
 	for i in 0 .. xsize {
 		for j in 0 .. ysize {
 			nc := neighbor_count(app.grid, i, j)
 			if app.grid[i][j] == 0 && nc == 3 {
-				app.newgrid[i][j] = 1
+				app.newgrid[i][j] = 1 // Rule populate
 			} else if app.grid[i][j] == 1 && (nc < 2 || nc > 3) {
-				app.newgrid[i][j] = 0
+				app.newgrid[i][j] = 0  // Rule die
 			} else {
-				app.newgrid[i][j] = app.grid[i][j]
+				app.newgrid[i][j] = app.grid[i][j] // Rule keep
 			}
 		}
 	}
@@ -151,7 +135,7 @@ fn on_init(mut app App) {
 // is needed for easier diagnostics on windows
 [console]
 fn main() {
-	println("Press 'q' to quit.")
+	println("Press 'q' to quit. Press 'i' to initialize.")
 	mut font_path := os.resource_abs_path(os.join_path('..', 'assets', 'fonts', 'RobotoMono-Regular.ttf'))
 	$if android {
 		font_path = 'fonts/RobotoMono-Regular.ttf'
