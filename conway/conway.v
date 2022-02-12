@@ -7,29 +7,29 @@ import gx
 import rand
 
 const (
-	xsize      = 100
-	xscale     = 5
-	ysize      = 100
-	yscale     = 5
+	xsize  = 100
+	xscale = 4
+	ysize  = 100 // when set to 105 fails.
+	yscale = 4
 )
 
 struct App {
 mut:
-	gen       int 
+	gen       int
 	gg        &gg.Context = 0
 	draw_flag bool        = true
-	grid      [][]int     = [][]int{len: xsize, init: []int{len: ysize}}
-	newgrid   [][]int     = [][]int{len: xsize, init: []int{len: ysize}}
+	grid      [][]byte     = [][]byte{len: xsize, init: []byte{len: ysize}}
+	newgrid   [][]byte     = [][]byte{len: xsize, init: []byte{len: ysize}}
 }
 
-fn neighbor_count(array [][]int, xo int, yo int) int {
+fn neighbor_count(array [][]byte, xo int, yo int) int {
 	mut sum := 0
 
 	// Computed wrapped coords.
-	xp := (xo + 1)%xsize
-	xm := (xo - 1 + xsize)%xsize
-	yp := (yo + 1)%ysize
-	ym := (yo - 1 + ysize)%ysize
+	xp := (xo + 1) % xsize
+	xm := (xo - 1 + xsize) % xsize
+	yp := (yo + 1) % ysize
+	ym := (yo - 1 + ysize) % ysize
 
 	sum += array[xm][ym]
 	sum += array[xp][ym]
@@ -43,7 +43,9 @@ fn neighbor_count(array [][]int, xo int, yo int) int {
 
 	return sum
 }
+
 fn on_frame(mut app App) {
+	app.gen += 1
 	if !app.draw_flag {
 		return
 	}
@@ -53,13 +55,13 @@ fn on_frame(mut app App) {
 	for i in 0 .. xsize {
 		for j in 0 .. ysize {
 			if app.grid[i][j] == 1 {
-				app.gg.draw_rect_filled(i*xscale, j*yscale, xscale, yscale, gx.white)
+				app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.white)
 			} else {
-				app.gg.draw_rect_filled(i*xscale, j*yscale, xscale, yscale, gx.black)
+				app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.black)
 			}
 		}
 	}
-	
+
 	// Compute next generation
 	for i in 0 .. xsize {
 		for j in 0 .. ysize {
@@ -67,7 +69,7 @@ fn on_frame(mut app App) {
 			if app.grid[i][j] == 0 && nc == 3 {
 				app.newgrid[i][j] = 1 // Rule populate
 			} else if app.grid[i][j] == 1 && (nc < 2 || nc > 3) {
-				app.newgrid[i][j] = 0  // Rule die
+				app.newgrid[i][j] = 0 // Rule die
 			} else {
 				app.newgrid[i][j] = app.grid[i][j] // Rule keep
 			}
@@ -127,7 +129,7 @@ fn on_init(mut app App) {
 	// Populate grid with bunch of 1's and 0's
 	for i in 0 .. xsize {
 		for j in 0 .. ysize {
-			app.grid[i][j] = rand.intn(65000) % 2
+			app.grid[i][j] = byte(rand.intn(256) % 2)
 		}
 	}
 }
@@ -144,8 +146,8 @@ fn main() {
 	mut app := &App{}
 
 	app.gg = gg.new_context(
-		width: xsize*xscale
-		height: ysize*yscale
+		width:  xsize * xscale
+		height:  ysize * yscale
 		window_title: 'Conway!'
 		bg_color: gx.black
 		user_data: app
