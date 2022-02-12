@@ -1,5 +1,4 @@
-// A starfield modelled after the Coding Challenge #1 by
-// the Coding Train.
+// Conway's Game of Life, the Coding Challenge #85 by the Coding Train.
 // Written by Stefan Schroeder in 2022 for the v project examples.
 // See LICENSE for license information.
 import os
@@ -16,14 +15,17 @@ const (
 
 struct App {
 mut:
+	gen       int 
 	gg        &gg.Context = 0
 	draw_flag bool        = true
 	grid      [][]int     = [][]int{len: xsize, init: []int{len: ysize}}
 	newgrid   [][]int     = [][]int{len: xsize, init: []int{len: ysize}}
 }
 
-fn neighbor_count(array [][]int, x int, y int) int {
+fn neighbor_count(array [][]int, xn int, yn int) int {
 	mut sum := 0
+	x := (xn + xsize) % xsize
+	y := (yn + ysize) % ysize
 	if x>0 && y>0 {
 		sum += array[x-1][y-1]
 	}
@@ -144,7 +146,6 @@ fn on_init(mut app App) {
 			app.grid[i][j] = rand.intn(65000) % 2
 		}
 	}
-	print(app.grid)
 }
 
 // is needed for easier diagnostics on windows
