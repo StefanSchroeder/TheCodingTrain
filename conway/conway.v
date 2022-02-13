@@ -36,7 +36,6 @@ fn neighbor_count(array [][][]byte, p byte,  xo int, yo int) int {
 	yp := (yo + 1) % ysize
 	ym := (yo - 1 + ysize) % ysize
 
-	//
 	//   -----------------------> x
 	//  |     A       B         C
 	//  | (x-1,y-1) (x,y-1) (x+1,y-1)
@@ -44,7 +43,7 @@ fn neighbor_count(array [][][]byte, p byte,  xo int, yo int) int {
 	//  | (x-1,y)   (x,y)   (x+1,y)
 	//  |     F       G         H
 	//  | (x-1,y+1) (x,y+1) (x+1,y+1)
-	//  v
+	//  y
 	//
 	sum += array[xm][ym][p] // A
 	sum += array[xo][ym][p] // B
@@ -141,10 +140,8 @@ fn on_init(mut app App) {
 	app.resize()
 
 	app.gen = 0
-	// Populate with bunch of 1's and 0's
 	for i in 0 .. xsize {
 		for j in 0 .. ysize {
-			//app.grid[i][j] = byte(rand.intn(256) % 2)
 			app.grid[i][j][0] = byte(rand.intn(256) % 2)
 		}
 	}
