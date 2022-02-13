@@ -6,9 +6,13 @@ import gg
 import gx
 import rand
 
+// The cells are stored in a 3d grid. 2d are used for the actual grid,
+// the third dimension is used for the CURRENT generation and the 
+// NEXT generation, always jump from plane 0 to plane 1 and from 
+// plane 1 to plane 0, thus avoiding any copy operation.
 const (
-	xsize  = 100
-	xscale = 4
+	xsize  = 100 // number of cells in x direction
+	xscale = 4 // size of one cell square
 	ysize  = 100 // when set to 105 fails.
 	yscale = 4
 )
@@ -18,43 +22,58 @@ mut:
 	gen       int
 	gg        &gg.Context = 0
 	draw_flag bool        = true
-	grid      [][]byte     = [][]byte{len: xsize, init: []byte{len: ysize}}
-	newgrid   [][]byte     = [][]byte{len: xsize, init: []byte{len: ysize}}
+	grid        [][][]byte   =  [][][]byte{len: xsize, init: [][]byte{len: ysize, init: []byte{len: 2}}}
 }
 
-fn neighbor_count(array [][]byte, xo int, yo int) int {
+// Counts and returns the number of neighbors at the position 
+// (x,y) taking wrapping into account. Looking at plane 'p'.
+fn neighbor_count(array [][][]byte, p byte,  xo int, yo int) int {
 	mut sum := 0
 
-	// Computed wrapped coords.
+	// Compute wrapped coords.
 	xp := (xo + 1) % xsize
 	xm := (xo - 1 + xsize) % xsize
 	yp := (yo + 1) % ysize
 	ym := (yo - 1 + ysize) % ysize
 
-	sum += array[xm][ym]
-	sum += array[xp][ym]
-	sum += array[xm][yp]
-	sum += array[xp][yp]
+	//
+	//   -----------------------> x
+	//  |     A       B         C
+	//  | (x-1,y-1) (x,y-1) (x+1,y-1)
+	//  |     D      self       E
+	//  | (x-1,y)   (x,y)   (x+1,y)
+	//  |     F       G         H
+	//  | (x-1,y+1) (x,y+1) (x+1,y+1)
+	//  v
+	//
+	sum += array[xm][ym][p] // A
+	sum += array[xo][ym][p] // B
+	sum += array[xp][ym][p] // C
 
-	sum += array[xm][yo]
-	sum += array[xp][yo]
-	sum += array[xo][ym]
-	sum += array[xo][yp]
+	sum += array[xm][yo][p] // D
+	sum += array[xp][yo][p] // E
+
+	sum += array[xm][yp][p] // F
+	sum += array[xo][yp][p] // G
+	sum += array[xp][yp][p] // H
 
 	return sum
 }
 
 fn on_frame(mut app App) {
-	app.gen += 1
 	if !app.draw_flag {
 		return
 	}
 	app.gg.begin()
 
-	// Draw grid
+	// Toggle btw plane 0 and 1
+	tg := byte(app.gen % 2) // THIS generation
+	ng := (tg + 1) % 2 // NEXT generation
+	
+	// Draw current generation
 	for i in 0 .. xsize {
 		for j in 0 .. ysize {
-			if app.grid[i][j] == 1 {
+			if app.grid[i][j][tg] == 1 {
 				app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.white)
 			} else {
 				app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.black)
@@ -65,22 +84,17 @@ fn on_frame(mut app App) {
 	// Compute next generation
 	for i in 0 .. xsize {
 		for j in 0 .. ysize {
-			nc := neighbor_count(app.grid, i, j)
-			if app.grid[i][j] == 0 && nc == 3 {
-				app.newgrid[i][j] = 1 // Rule populate
-			} else if app.grid[i][j] == 1 && (nc < 2 || nc > 3) {
-				app.newgrid[i][j] = 0 // Rule die
+			nc := neighbor_count(app.grid, tg, i, j)
+			if app.grid[i][j][tg] == 0 && nc == 3 {
+				app.grid[i][j][ng] = 1 // Rule "Populate"
+			} else if app.grid[i][j][tg] == 1 && (nc < 2 || nc > 3) {
+				app.grid[i][j][ng] = 0 // Rule "Die"
 			} else {
-				app.newgrid[i][j] = app.grid[i][j] // Rule keep
+				app.grid[i][j][ng] = app.grid[i][j][tg] // Rule "Keep"
 			}
 		}
 	}
-	// Copy newgrid to grid
-	for i in 0 .. xsize {
-		for j in 0 .. ysize {
-			app.grid[i][j] = app.newgrid[i][j]
-		}
-	}
+	app.gen += 1
 
 	app.gg.end()
 }
@@ -126,10 +140,12 @@ fn on_event(e &gg.Event, mut app App) {
 fn on_init(mut app App) {
 	app.resize()
 
-	// Populate grid with bunch of 1's and 0's
+	app.gen = 0
+	// Populate with bunch of 1's and 0's
 	for i in 0 .. xsize {
 		for j in 0 .. ysize {
-			app.grid[i][j] = byte(rand.intn(256) % 2)
+			//app.grid[i][j] = byte(rand.intn(256) % 2)
+			app.grid[i][j][0] = byte(rand.intn(256) % 2)
 		}
 	}
 }
