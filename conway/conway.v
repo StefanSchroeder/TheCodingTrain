@@ -7,14 +7,14 @@ import gx
 import rand
 
 // The cells are stored in a 3d grid. 2d are used for the actual grid,
-// the third dimension is used for the CURRENT generation and the 
-// NEXT generation, always jump from plane 0 to plane 1 and from 
+// the third dimension is used for the CURRENT generation and the
+// NEXT generation, always jump from plane 0 to plane 1 and from
 // plane 1 to plane 0, thus avoiding any copy operation.
 const (
 	xsize  = 100 // number of cells in x direction
-	xscale = 4 // size of one cell square
-	ysize  = 100 // when set to 105 fails.
-	yscale = 4
+	xscale = 5 // size of one cell square
+	ysize  = 100 
+	yscale = 5
 )
 
 struct App {
@@ -22,12 +22,12 @@ mut:
 	gen       int
 	gg        &gg.Context = 0
 	draw_flag bool        = true
-	grid        [][][]byte   =  [][][]byte{len: xsize, init: [][]byte{len: ysize, init: []byte{len: 2}}}
+	grid      [][][]byte  = [][][]byte{len: xsize, init: [][]byte{len: ysize, init: []byte{len: 2}}}
 }
 
-// Counts and returns the number of neighbors at the position 
+// Counts and returns the number of neighbors at the position
 // (x,y) taking wrapping into account. Looking at plane 'p'.
-fn neighbor_count(array [][][]byte, p byte,  xo int, yo int) int {
+fn neighbor_count(array [][][]byte, p byte, xo int, yo int) int {
 	mut sum := 0
 
 	// Compute wrapped coords.
@@ -63,22 +63,23 @@ fn on_frame(mut app App) {
 	if !app.draw_flag {
 		return
 	}
-	app.gg.begin()
 
 	// Toggle btw plane 0 and 1
 	tg := byte(app.gen % 2) // THIS generation
 	ng := (tg + 1) % 2 // NEXT generation
-	
+
 	// Draw current generation
-	for i in 0 .. xsize {
+	app.gg.begin()
+	for i in 0 .. xsize  {
 		for j in 0 .. ysize {
 			if app.grid[i][j][tg] == 1 {
 				app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.white)
 			} else {
-				app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.black)
+				app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.blue)
 			}
 		}
 	}
+	app.gg.end()
 
 	// Compute next generation
 	for i in 0 .. xsize {
@@ -95,7 +96,6 @@ fn on_frame(mut app App) {
 	}
 	app.gen += 1
 
-	app.gg.end()
 }
 
 fn (mut app App) resize() {
@@ -159,10 +159,10 @@ fn main() {
 	mut app := &App{}
 
 	app.gg = gg.new_context(
-		width:  xsize * xscale
-		height:  ysize * yscale
+		width: xsize * xscale
+		height: ysize * yscale
 		window_title: 'Conway!'
-		bg_color: gx.black
+		bg_color: gx.yellow
 		user_data: app
 		frame_fn: on_frame
 		event_fn: on_event
