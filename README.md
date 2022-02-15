@@ -114,7 +114,7 @@ Works like a charm.
 - [ ] CC_082_Image_Chrome_Extension_The_Ex-Kitten-sion/JavaScript
 - [ ] CC_083_Chrome_Extension_with_p5js_Sketch/JavaScript
 - [ ] CC_084_Word_Definition_Extension/JavaScript
-- [ ] CC_085_The_Game_of_Life
+- [X] CC_085_The_Game_of_Life
 - [ ] CC_086_beesandbombs
 - [ ] CC_087_3D_Knots
 - [ ] CC_088_snowfall
