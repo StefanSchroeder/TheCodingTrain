@@ -35,7 +35,7 @@ Works like a charm.
 - [ ] CC_018_SpaceColonizer3D/Processing/CC_018_SpaceColonizer3D
 - [ ] CC_019_Superellipse
 - [ ] CC_020_ClothSimulation
-- [ ] CC_021_Mandelbrot
+- [X] CC_021_Mandelbrot
 - [ ] CC_022_JuliaSet
 - [ ] CC_023_SuperShape2D
 - [ ] CC_024_PerlinNoiseFlowField
