@@ -1,9 +1,10 @@
-// Conway's Game of Life, the Coding Challenge #85 by the Coding Train.
+// Mandelbrot Set the Coding Challenge #21 by the Coding Train.
 // Written by Stefan Schroeder in 2022 for the v project examples.
 // See LICENSE for license information.
 import os
 import gg
 import gx
+import math
 
 const (
 	xsize  = 256 
@@ -13,13 +14,11 @@ const (
 
 struct App {
 mut:
-	gen       int
 	gg        &gg.Context = 0
 	draw_flag bool        = true
-	x1        f64 = -2.0
-	y1        f64 = -1.5
-	xzoom     f64 = 0.01
-	yzoom     f64 = 0.01
+	cx        f64 = 0.0
+	cy        f64 = 0.0
+	viewport  f64 = 2.0
 }
 
 fn on_frame(mut app App) {
@@ -31,8 +30,8 @@ fn on_frame(mut app App) {
 	for i in 0 .. xsize  {
 		for j in 0 .. ysize {
 
-			mut a := f64(i * app.xzoom) + app.x1
-			mut b := f64(j * app.yzoom) + app.y1
+			mut a := f64(i)/f64(xsize) * app.viewport + app.cx - 0.5*app.viewport
+			mut b := f64(j)/f64(xsize) * app.viewport + app.cy - 0.5*app.viewport
 
 			ca := a
 			cb := b
@@ -49,17 +48,19 @@ fn on_frame(mut app App) {
 				n++
 			}
 
-			col := gx.Color{
-				r: byte(n/maxiter*255)
-				g: byte(n/maxiter*255)
-				b: byte(n/maxiter*255)
+			mut col := gx.white
+			if n != maxiter {
+				col = gx.Color{
+				r: byte(math.sqrt(f64(n)/maxiter)*255)
+				g: 0
+				b: 0
+				}
 			}
 			app.gg.draw_pixel(i, j, col)
 		}
 	}
 	app.gg.end()
 
-	app.gen += 1
 
 }
 
@@ -87,34 +88,25 @@ fn on_event(e &gg.Event, mut app App) {
 			if e.typ == .key_down {
 				match e.key_code {
 					.i {
-						println('Init')
 						on_init(mut app)
 					}
 					.k {
-						println('Up')
-						app.y1 -= 0.1
+						app.cy -= 0.1 * app.viewport
 					}
 					.j {
-						println('Down')
-						app.y1 += 0.1
+						app.cy += 0.1 * app.viewport
 					}
 					.h {
-						println('left')
-						app.x1 -= 0.1
+						app.cx -= 0.1 * app.viewport
 					}
 					.l {
-						println('right')
-						app.x1 += 0.1
+						app.cx += 0.1 * app.viewport
 					}
 					.m {
-						println('in')
-						app.xzoom *= 0.5
-						app.yzoom *= 0.5
+						app.viewport *= 0.9
 					}
 					.n {
-						println('out')
-						app.xzoom /= 0.5
-						app.yzoom /= 0.5
+						app.viewport *= 1.1
 					}
 					.q {
 						println('Good bye.')
@@ -129,13 +121,15 @@ fn on_event(e &gg.Event, mut app App) {
 
 fn on_init(mut app App) {
 	app.resize()
-	app.gen = 0
+	app.cx        = 0.0
+	app.cy        = 0.0
+	app.viewport  = 2.0
 }
 
 // is needed for easier diagnostics on windows
 [console]
 fn main() {
-	println("Press 'q' to quit. Press 'i' to initialize.")
+	println("Press 'q' to quit. Press 'i' to initialize, 'hjkl' to slide, 'nm' to zoom.")
 	mut font_path := os.resource_abs_path(os.join_path('..', 'assets', 'fonts', 'RobotoMono-Regular.ttf'))
 	$if android {
 		font_path = 'fonts/RobotoMono-Regular.ttf'
@@ -146,7 +140,7 @@ fn main() {
 	app.gg = gg.new_context(
 		width: xsize
 		height: ysize
-		window_title: 'Conway!'
+		window_title: 'Mandelbrot!'
 		bg_color: gx.yellow
 		user_data: app
 		frame_fn: on_frame
