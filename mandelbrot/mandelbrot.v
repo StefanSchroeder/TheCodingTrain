@@ -18,6 +18,8 @@ mut:
 	draw_flag bool        = true
 	x1        f64 = -2.0
 	y1        f64 = -1.5
+	xzoom     f64 = 0.01
+	yzoom     f64 = 0.01
 }
 
 fn on_frame(mut app App) {
@@ -29,8 +31,8 @@ fn on_frame(mut app App) {
 	for i in 0 .. xsize  {
 		for j in 0 .. ysize {
 
-			mut a := f64(i / 100.0) + app.x1
-			mut b := f64(j / 100.0) + app.y1
+			mut a := f64(i * app.xzoom) + app.x1
+			mut b := f64(j * app.yzoom) + app.y1
 
 			ca := a
 			cb := b
@@ -89,20 +91,30 @@ fn on_event(e &gg.Event, mut app App) {
 						on_init(mut app)
 					}
 					.k {
-						println('j')
+						println('Up')
 						app.y1 -= 0.1
 					}
 					.j {
-						println('j')
+						println('Down')
 						app.y1 += 0.1
 					}
 					.h {
-						println('j')
+						println('left')
 						app.x1 -= 0.1
 					}
 					.l {
-						println('j')
+						println('right')
 						app.x1 += 0.1
+					}
+					.m {
+						println('in')
+						app.xzoom *= 0.5
+						app.yzoom *= 0.5
+					}
+					.n {
+						println('out')
+						app.xzoom /= 0.5
+						app.yzoom /= 0.5
 					}
 					.q {
 						println('Good bye.')
