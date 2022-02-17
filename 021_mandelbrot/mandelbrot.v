@@ -7,8 +7,8 @@ import gx
 import math
 
 const (
-	xsize  = 256 
-	ysize  = 256 
+	xsize   = 256
+	ysize   = 256
 	maxiter = 100
 )
 
@@ -27,11 +27,10 @@ fn on_frame(mut app App) {
 	}
 
 	app.gg.begin()
-	for i in 0 .. xsize  {
+	for i in 0 .. xsize {
 		for j in 0 .. ysize {
-
-			mut a := f64(i)/f64(xsize) * app.viewport + app.cx - 0.5*app.viewport
-			mut b := f64(j)/f64(xsize) * app.viewport + app.cy - 0.5*app.viewport
+			mut a := f64(i) / f64(xsize) * app.viewport + app.cx - 0.5 * app.viewport
+			mut b := f64(j) / f64(xsize) * app.viewport + app.cy - 0.5 * app.viewport
 
 			ca := a
 			cb := b
@@ -51,17 +50,15 @@ fn on_frame(mut app App) {
 			mut col := gx.white
 			if n != maxiter {
 				col = gx.Color{
-				r: byte(math.sqrt(f64(n)/maxiter)*255)
-				g: 0
-				b: 0
+					r: byte(math.sqrt(f64(n) / maxiter) * 255)
+					g: 0
+					b: 0
 				}
 			}
 			app.gg.draw_pixel(i, j, col)
 		}
 	}
 	app.gg.end()
-
-
 }
 
 fn (mut app App) resize() {
@@ -121,9 +118,9 @@ fn on_event(e &gg.Event, mut app App) {
 
 fn on_init(mut app App) {
 	app.resize()
-	app.cx        = 0.0
-	app.cy        = 0.0
-	app.viewport  = 2.0
+	app.cx = 0.0
+	app.cy = 0.0
+	app.viewport = 2.0
 }
 
 // is needed for easier diagnostics on windows
