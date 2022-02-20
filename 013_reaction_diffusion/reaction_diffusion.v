@@ -1,10 +1,9 @@
-// Reaction Diffusion Coding Challenge # by the Coding Train.
+// Reaction Diffusion Coding Challenge #13 by the Coding Train.
 // Written by Stefan Schroeder in 2022 for the v project examples.
 // See LICENSE for license information.
 import os
 import gg
 import gx
-// import rand
 
 const (
 	xsize = 200
@@ -58,9 +57,6 @@ fn on_frame(mut app App) {
 	tg := byte(app.gen % 2) // THIS generation
 	ng := (tg + 1) % 2 // NEXT generation
 
-	// Draw current generation
-	app.gg.begin()
-
 	for x in 1 .. xsize - 1 {
 		for y in 1 .. ysize - 1 {
 			a := app.grid[x][y][tg].a
@@ -73,15 +69,8 @@ fn on_frame(mut app App) {
 			app.grid[x][y][ng].b = constrain(app.grid[x][y][ng].b, 0.0, 1.0)
 		}
 	}
-	/*
-	for i in 0 .. xsize  {
-		for j in 0 .. ysize {
-			a := app.grid[i][j][0].a
-			b := app.grid[i][j][0].b
-			col := gx.Color{ r: byte(a*255), g: 0, b: byte(b*255) }
-			app.gg.draw_pixel(i, j, col)
-		}
-	}*/
+
+	app.gg.begin()
 	for x in 0 .. xsize {
 		for y in 0 .. ysize {
 			a := app.grid[x][y][ng].a
@@ -96,7 +85,6 @@ fn on_frame(mut app App) {
 			app.gg.draw_pixel(x, y, col)
 		}
 	}
-
 	app.gg.end()
 
 	app.gen += 1
@@ -144,11 +132,12 @@ fn on_init(mut app App) {
 	app.resize()
 
 	app.gen = 0
+	// bring out seed
 	for i in 0 .. xsize {
 		for j in 0 .. ysize {
 			app.grid[i][j][0] = Dot{1.0, 0.0}
 			app.grid[i][j][1] = Dot{1.0, 0.0}
-			if i > 100 && i < 110 && j > 100 && j < 110 {
+			if i > 95 && i < 105 && j > 95 && j < 105 {
 				app.grid[i][j][0] = Dot{1.0, 1.0}
 			}
 		}
