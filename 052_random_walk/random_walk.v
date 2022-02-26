@@ -39,7 +39,7 @@ fn on_frame(mut app App) {
 				if app.grid[i][j] == 1 {
 					app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.white)
 				} else {
-					//app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.black)
+					// app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.black)
 				}
 			}
 		}
