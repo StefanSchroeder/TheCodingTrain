@@ -14,21 +14,22 @@ const (
 	xscale = 5 // size of one cell square
 	ysize  = 100 
 	yscale = 5
-	antup = 0
-	antrt = 1
-	antdn = 2
-	antlt = 3
+	antup = 0 // Up
+	antrt = 1 // Right
+	antdn = 2 // Down
+	antlt = 3 // Left
+	show_every = 15 // display every n-th frame
 )
 
 struct App {
 mut:
-	gen       int
+	gen       int // generation counter
 	gg        &gg.Context = 0
 	draw_flag bool        = true
 	grid [][]byte =  [][]byte{len: xsize, init: []byte{len: ysize}}
-	x         int
-	y         int
-	dir       int
+	x         int // x-position of ant
+	y         int // y-position of ant
+	dir       int // direction of ant
 }
 
 
@@ -37,28 +38,25 @@ fn on_frame(mut app App) {
 		return
 	}
 
-	// Toggle btw plane 0 and 1
-	//tg := byte(app.gen % 2) // THIS generation
-	//ng := (tg + 1) % 2 // NEXT generation
-
 	// Draw current generation
-	app.gg.begin()
-	for i in 0 .. xsize  {
-		for j in 0 .. ysize {
-			if app.grid[i][j] == 1 {
-				app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.red)
-			} else {
-				app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.blue)
+	if app.gen % show_every == 0 {
+		app.gg.begin()
+		for i in 0 .. xsize  {
+			for j in 0 .. ysize {
+				if app.grid[i][j] == 1 {
+					app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.white)
+				} else {
+					app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.black)
+				}
 			}
 		}
+		app.gg.end()
 	}
-	app.gg.end()
 
-	mut new_dir := 0
-	if app.grid[app.x][app.y] == 0 {
-		new_dir = (app.dir + 1) % 4
+	mut new_dir := if app.grid[app.x][app.y] == 0 {
+		(app.dir + 1) % 4
 	} else {
-		new_dir = (app.dir - 1 + 4) % 4
+		(app.dir - 1 + 4) % 4
 	}
 
 	app.x, app.y = move_forward(new_dir, app.x, app.y)
@@ -68,7 +66,6 @@ fn on_frame(mut app App) {
 	app.grid[app.x][app.y] %= 2
 
 	app.gen += 1
-
 }
 
 fn (mut app App) resize() {
@@ -118,9 +115,9 @@ fn move_forward(dir int, x int, y int) (int, int) {
 		antdn { newy++ }
 		antrt { newx++ }
 		antlt { newx-- }
-		else { 0 }
+		else { panic("How did you get here?") }
 	}
-	newx = (newx + xsize) % xsize
+	newx = (newx + xsize) % xsize // wrap around edges
 	newy = (newy + ysize) % ysize
 	return newx, newy
 }
