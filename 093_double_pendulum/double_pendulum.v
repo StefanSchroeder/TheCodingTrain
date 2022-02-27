@@ -1,4 +1,4 @@
-// An double pendulum following the Coding Challenge #95 by
+// A double pendulum following the Coding Challenge #95 by
 // the Coding Train.
 // Draws a square canvas with pendulums, one attached
 // to the other, showing stunning chaotic movements.

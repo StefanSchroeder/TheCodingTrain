@@ -1,5 +1,6 @@
 # TheCodingTrain
-# # Code Challenges for TheCodingTrain.com implemented in Vlang
+
+## Code Challenges for TheCodingTrain.com implemented in Vlang
 
 ## Setup
 
@@ -12,6 +13,9 @@ To enter a development shell, I run
 Compile v from source as documented here: https://github.com/vlang/v
 
 Works like a charm.
+
+NB: Not all the challenges are implemented. I some cases I am referring 
+to other solutions. 
 
 ## List of Challenges
 
@@ -58,7 +62,7 @@ Works like a charm.
 - [ ] CC_037_diastic
 - [ ] CC_038_word_interactor/P5
 - [ ] CC_039_madlibs/P5
-- [ ] CC_040.1_wordcounts
+- [X] CC_040.1_wordcounts
 - [ ] CC_040.3_tf-idf/P5
 - [ ] CC_041_ClappyBird
 - [ ] CC_042.1_markov-chain
