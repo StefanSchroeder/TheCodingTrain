@@ -18,7 +18,7 @@ Works like a charm.
 - [X] CC_001_StarField
 - [ ] CC_002_MengerSponge
 - [ ] CC_003_Snake_game
-- [ ] CC_004_PurpleRain
+- [X] CC_004_PurpleRain
 - [ ] CC_005_Space_invaders
 - [ ] CC_006_Mitosis
 - [ ] CC_007_SolarSystemGenerator
@@ -27,7 +27,7 @@ Works like a charm.
 - [ ] CC_010_Maze_DFS
 - [ ] CC_011_PerlinNoiseTerrain
 - [ ] CC_012_LorenzAttractor
-- [ ] CC_013_ReactionDiffusion
+- [X] CC_013_ReactionDiffusion
 - [ ] CC_014_FractalTree
 - [ ] CC_015_FractalTreeArray
 - [ ] CC_016_LSystem
@@ -41,7 +41,7 @@ Works like a charm.
 - [ ] CC_024_PerlinNoiseFlowField
 - [ ] CC_025_SphereGeometry
 - [ ] CC_026_SuperShape3D/Processing/CC_026_SuperShape3D
-- [ ] CC_027_FireWorks
+- [X] CC_027_FireWorks solved by https://github.com/vlang/v/tree/master/examples/fireworks
 - [ ] CC_028_MetaBalls
 - [ ] CC_029_SmartRockets
 - [ ] CC_030_Phyllotaxis
@@ -73,7 +73,7 @@ Works like a charm.
 - [ ] CC_050.1_CirclePackingAnimated
 - [ ] CC_050.2_CirclePackingImage
 - [ ] CC_051_astar
-- [ ] CC_052_random_walk
+- [X] CC_052_random_walk
 - [ ] CC_053_random_walk_levy
 - [ ] CC_054.1_StarPatterns
 - [ ] CC_054.2_StarPatterns/P5
@@ -102,7 +102,7 @@ Works like a charm.
 - [ ] CC_071_minesweeper
 - [ ] CC_072_Frogger
 - [ ] CC_073_Acrostic/P5
-- [ ] CC_074_Clock
+- [X] CC_074_Clock solved by https://github.com/vlang/v/blob/master/examples/clock/clock.v
 - [ ] CC_075_Wikipedia/P5
 - [ ] CC_076_10PRINT
 - [ ] CC_077_Recursion
@@ -118,7 +118,7 @@ Works like a charm.
 - [ ] CC_086_beesandbombs
 - [ ] CC_087_3D_Knots
 - [ ] CC_088_snowfall
-- [ ] CC_089_langtonsant
+- [X] CC_089_langtonsant
 - [ ] CC_090_dithering
 - [ ] CC_091_snakesladders
 - [ ] CC_092_xor
