@@ -15,9 +15,9 @@ Works like a charm.
 
 ## List of Challenges
 
-- [X] CC_001_StarField
+- [X] CC_001_StarField or here https://github.com/vlang/v/blob/master/examples/gg/stars.v
 - [ ] CC_002_MengerSponge
-- [ ] CC_003_Snake_game
+- [X] CC_003_Snake_game solved by https://github.com/vlang/v/tree/master/examples/snek
 - [X] CC_004_PurpleRain
 - [ ] CC_005_Space_invaders
 - [ ] CC_006_Mitosis
@@ -35,7 +35,7 @@ Works like a charm.
 - [ ] CC_018_SpaceColonizer3D/Processing/CC_018_SpaceColonizer3D
 - [ ] CC_019_Superellipse
 - [ ] CC_020_ClothSimulation
-- [X] CC_021_Mandelbrot
+- [X] CC_021_Mandelbrot or here https://github.com/vlang/v/blob/master/examples/gg/mandelbrot.v
 - [ ] CC_022_JuliaSet
 - [ ] CC_023_SuperShape2D
 - [ ] CC_024_PerlinNoiseFlowField
