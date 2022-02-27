@@ -31,22 +31,19 @@ fn on_frame(mut app App) {
 		return
 	}
 
-	// Draw current generation
 	if app.gen % show_every == 0 {
 		app.gg.begin()
 		for i in 0 .. xsize {
 			for j in 0 .. ysize {
 				if app.grid[i][j] == 1 {
 					app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.white)
-				} else {
-					// app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.black)
 				}
 			}
 		}
 		app.gg.end()
 	}
 
-	mut new_dir := rand.int_in_range(0, 4)
+	new_dir := rand.int_in_range(0, 4)
 
 	app.x, app.y = move_forward(new_dir, app.x, app.y)
 	app.dir = new_dir
