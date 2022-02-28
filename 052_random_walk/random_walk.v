@@ -136,7 +136,7 @@ fn main() {
 	app.gg = gg.new_context(
 		width: xsize * xscale
 		height: ysize * yscale
-		window_title: "Langton's ant!"
+		window_title: "Random walk"
 		bg_color: gx.black
 		user_data: app
 		frame_fn: on_frame
