@@ -54,7 +54,7 @@ fn on_frame(mut app App) {
 	}
 
 	// Toggle btw plane 0 and 1
-	tg := byte(app.gen % 2) // THIS generation
+	tg := u8(app.gen % 2) // THIS generation
 	ng := (tg + 1) % 2 // NEXT generation
 
 	for x in 1 .. xsize - 1 {
@@ -75,8 +75,8 @@ fn on_frame(mut app App) {
 		for y in 0 .. ysize {
 			a := app.grid[x][y][ng].a
 			b := app.grid[x][y][ng].b
-			mut c := byte((a - b) * 255)
-			c = byte(constrain_int(c, 0, 255))
+			mut c := u8((a - b) * 255)
+			c = u8(constrain_int(c, 0, 255))
 			col := gx.Color{
 				r: c
 				g: c

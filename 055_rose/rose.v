@@ -27,8 +27,10 @@ fn on_frame(mut app App) {
 	}
 
 	if app.count % 60 == 0 {
-		n := f32(rand.int_in_range(1, 10))
-		d := f32(rand.int_in_range(1, 10))
+		n0 := rand.int_in_range(1, 10) or { return }
+		n := f32(n0)
+		d0 := rand.int_in_range(1, 10) or { return }
+		d := f32(d0)
 		k := n / d
 		mut a := 0.0
 		app.numbers = []

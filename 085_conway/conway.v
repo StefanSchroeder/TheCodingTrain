@@ -65,7 +65,7 @@ fn on_frame(mut app App) {
 	}
 
 	// Toggle btw plane 0 and 1
-	tg := byte(app.gen % 2) // THIS generation
+	tg := u8(app.gen % 2) // THIS generation
 	ng := (tg + 1) % 2 // NEXT generation
 
 	// Draw current generation
@@ -142,7 +142,8 @@ fn on_init(mut app App) {
 	app.gen = 0
 	for i in 0 .. xsize {
 		for j in 0 .. ysize {
-			app.grid[i][j][0] = byte(rand.intn(256) % 2)
+			r0 := rand.intn(256) or { return }
+			app.grid[i][j][0] = u8(r0 % 2)
 		}
 	}
 }

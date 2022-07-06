@@ -43,7 +43,7 @@ fn on_frame(mut app App) {
 		app.gg.end()
 	}
 
-	new_dir := rand.int_in_range(0, 4)
+	new_dir := rand.int_in_range(0, 4) or { return }
 
 	app.x, app.y = move_forward(new_dir, app.x, app.y)
 	app.dir = new_dir

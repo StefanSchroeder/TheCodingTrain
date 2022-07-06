@@ -26,7 +26,7 @@ mut:
 	gen       int // generation counter
 	gg        &gg.Context = 0
 	draw_flag bool        = true
-	grid      [][]byte    = [][]byte{len: xsize, init: []byte{len: ysize}}
+	grid      [][]u8    = [][]u8{len: xsize, init: []u8{len: ysize}}
 	x         int // x-position of ant
 	y         int // y-position of ant
 	dir       int // direction of ant

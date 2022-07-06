@@ -50,7 +50,7 @@ fn on_frame(mut app App) {
 			mut col := gx.white
 			if n != maxiter {
 				col = gx.Color{
-					r: byte(math.sqrt(f64(n) / maxiter) * 255)
+					r: u8(math.sqrt(f64(n) / maxiter) * 255)
 					g: 0
 					b: 0
 				}

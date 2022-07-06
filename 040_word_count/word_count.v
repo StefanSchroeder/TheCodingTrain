@@ -3,8 +3,8 @@
 // Written by Stefan Schroeder in 2022 for the v project examples.
 // See LICENSE for license information.
 import os
-
-text := os.read_file('data/rainbow.txt') or {
+fn main() {
+zxz := os.read_file('data/rainbow.txt') or {
 	eprintln('failed to read the file: $err')
 	return
 }
@@ -12,7 +12,7 @@ text := os.read_file('data/rainbow.txt') or {
 mut m := map[string]int{} // a map with `string` keys and `int` values
 
 // Split at any punctuation.
-words := text.split_any(":()[] ,;.?!\n")
+words := zxz.split_any(":()[] ,;.?!\n")
 
 for word in words {
 	if m[word] == 0 {
@@ -33,3 +33,4 @@ for k in keys {
 	println('$k $v')
 }
 
+}
