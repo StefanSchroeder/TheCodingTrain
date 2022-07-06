@@ -46,9 +46,9 @@ fn on_frame(mut app App) {
 			app.drops[i].y + app.drops[i].len, penc)
 		if app.drops[i].y > ysize {
 			// reinvent the drop
-			app.drops[i].x = rand.f32_in_range(0.0, xsize)
-			app.drops[i].y = rand.f32_in_range(-1 * ysize, -50)
-			z := rand.f32_in_range(0, 20)
+			app.drops[i].x = rand.f32_in_range(0.0, xsize) or { return }
+			app.drops[i].y = rand.f32_in_range(-1 * ysize, -50) or { return }
+			z := rand.f32_in_range(0, 20) or { return }
 			app.drops[i].z = z
 			app.drops[i].len = mymap(z, 0, 20, 10, 20)
 			app.drops[i].yspeed = mymap(z, 0, 20, 1, 20)
@@ -106,9 +106,9 @@ fn on_init(mut app App) {
 
 	// In the beginning, create the drops.
 	for _ in 0 .. drop_count {
-		x := rand.f32_in_range(0.0, xsize)
-		y := rand.f32_in_range(-1 * ysize, -50)
-		z := rand.f32_in_range(0, 20)
+		x := rand.f32_in_range(0.0, xsize) or { return } 
+		y := rand.f32_in_range(-1 * ysize, -50) or { return } 
+		z := rand.f32_in_range(0, 20) or { return } 
 		len := mymap(z, 0, 20, 10, 20)
 		yspeed := mymap(z, 0, 20, 1, 20)
 		app.drops << Drop{x, y, z, len, yspeed}
