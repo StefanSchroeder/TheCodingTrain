@@ -41,9 +41,9 @@ fn on_frame(mut app App) {
 	for i in 0 .. star_count {
 		app.stars[i].z -= 1
 		if app.stars[i].z < 1 { // reached the center, reset
-			app.stars[i].y = rand.f32_in_range(-center, center)
-			app.stars[i].x = rand.f32_in_range(-center, center)
-			app.stars[i].z = rand.f32_in_range(0, center)
+			app.stars[i].y = rand.f32_in_range(-center, center) or {return}
+			app.stars[i].x = rand.f32_in_range(-center, center) or {return}
+			app.stars[i].z = rand.f32_in_range(0, center) or {return}
 		} else {
 			sx := app.stars[i].x / app.stars[i].z * speed_scale
 			sy := app.stars[i].y / app.stars[i].z * speed_scale
@@ -96,9 +96,9 @@ fn on_init(mut app App) {
 
 	// In the beginning, create the stars.
 	for _ in 0 .. star_count {
-		x := rand.f32_in_range(-center, center)
-		y := rand.f32_in_range(-center, center)
-		z := rand.f32_in_range(0, center)
+		x := rand.f32_in_range(-center, center) or {return}
+		y := rand.f32_in_range(-center, center) or {return}
+		z := rand.f32_in_range(0, center) or {return}
 		app.stars << Star{x, y, z, star_size}
 	}
 }
