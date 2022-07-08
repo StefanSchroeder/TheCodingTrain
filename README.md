@@ -127,7 +127,7 @@ to other solutions.
 - [ ] CC_091_snakesladders
 - [ ] CC_092_xor
 - [X] CC_093_DoublePendulum
-- [ ] CC_094_2048
+- [X] CC_094_2048 solved by https://github.com/vlang/v/tree/master/examples/2048
 - [ ] CC_095_Approximating_Pi
 - [ ] CC_096_Visualizing_the_Digits_of_Pi
 - [ ] CC_097.1_Book_of_Pi_Part_1/Processing/CC_097_1_Book_of_Pi_Part_1
