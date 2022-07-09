@@ -40,7 +40,7 @@ to other solutions.
 - [ ] CC_019_Superellipse
 - [ ] CC_020_ClothSimulation
 - [X] CC_021_Mandelbrot or here https://github.com/vlang/v/blob/master/examples/gg/mandelbrot.v
-- [ ] CC_022_JuliaSet
+- [X] CC_022_JuliaSet
 - [ ] CC_023_SuperShape2D
 - [ ] CC_024_PerlinNoiseFlowField
 - [ ] CC_025_SphereGeometry
