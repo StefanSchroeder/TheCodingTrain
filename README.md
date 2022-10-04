@@ -12,10 +12,12 @@ To enter a development shell, I run
 
 Compile v from source as documented here: https://github.com/vlang/v
 
-Works like a charm.
+Need to set 
+
+	export VFLAGS='-cc gcc'
 
 NB: Not all the challenges are implemented. In some cases I am referring 
-to other solutions. 
+to external solutions. 
 
 ## List of Challenges
 
