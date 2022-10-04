@@ -14,7 +14,7 @@ Compile v from source as documented here: https://github.com/vlang/v
 
 Works like a charm.
 
-NB: Not all the challenges are implemented. I some cases I am referring 
+NB: Not all the challenges are implemented. In some cases I am referring 
 to other solutions. 
 
 ## List of Challenges
