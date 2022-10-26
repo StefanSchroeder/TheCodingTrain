@@ -1,5 +1,8 @@
 // A fractal tree generator following the Coding Challenge #14
 // by the Coding Train.
+// Since there is no global 'translate' or 'rotate' we are doing
+// some vector arithetic to accomomplish the same effect
+// in a global co-system.
 // Written by Stefan Schroeder in 2022.
 // See LICENSE for license information.
 import os
@@ -7,50 +10,37 @@ import gg
 import gx
 import math
 
-const (
-	center      = 350
-)
+const ( center      = 350 )
 
 struct Vec {
 	x f32
 	y f32
 }
 
-fn (a Vec) str() string {
-	return '{$a.x, $a.y}'
-}
 
 fn (a Vec) + (b Vec) Vec {
 	return Vec{a.x + b.x, a.y + b.y}
-}
-
-fn (a Vec) - (b Vec) Vec {
-	return Vec{a.x - b.x, a.y - b.y}
 }
 
 struct App {
 mut:
 	gg        &gg.Context = unsafe { 0 }
 	draw_flag bool        = true
-	// constants define the initial state.
-	dpi_scale f32 = 1.0
-	appangle f32 = 0.0
-	x0 int = 0
-	y0 int = 0
-	angle f32 = 0.0
+	deltaangle f32 = 5.0
 }
 
-// returns the non-offset end of the line 
-fn stick(mut app App, offset Vec, length f32, angle int) {
-	if length < 5 {
+// Draws one branch and dispatches drawing of two child branches.
+// Takes a context, the offset, length and rotation-angle as
+// arguments.
+fn branch(mut app App, offset Vec, length f32, angle f32) {
+	if length < 3 {
 		return 
 	}
-	rv := rotate_vev( Vec{ 0, length }, angle ) 
-	newv := Vec { offset.x + rv.x, offset.y + rv.y}
+	newv := offset + rotate_vev( Vec{ 0, length }, angle ) 
 	app.gg.draw_line(offset.x, 2*center - offset.y, newv.x, 2 * center - newv.y, gx.black)
 
-	stick(mut app, newv, length*0.75, angle + 10)
-	stick(mut app, newv, length*0.75, angle - 10)
+	branch(mut app, newv, length*0.75, angle + app.deltaangle)
+	branch(mut app, newv, length*0.75, angle - app.deltaangle)
 
 }
 
@@ -60,10 +50,7 @@ fn on_frame(mut app App) {
 	}
 
 	app.gg.begin()
-
-	o := Vec{center, 0}
-	stick(mut app, o, 100, 0)
-
+	branch(mut app, Vec{center, 0}, 100, 0)
 	app.gg.end()
 
 }
@@ -106,10 +93,10 @@ fn on_event(e &gg.Event, mut app App) {
 						app.gg.quit()
 					}
 					.w {
-						app.appangle += 5.0
+						app.deltaangle += 3.0
 					}
 					.e {
-						app.appangle -= 5.0
+						app.deltaangle -= 3.0
 					}
 					else {}
 				}
@@ -125,7 +112,7 @@ fn on_init(mut app App) {
 // is needed for easier diagnostics on windows
 [console]
 fn main() {
-	println("Press 'q' to quit or 'k' to kick.")
+	println("Press 'q' to quit or '[we]' to change angle.")
 	mut font_path := os.resource_abs_path(os.join_path('..', 'assets', 'fonts', 'RobotoMono-Regular.ttf'))
 	$if android {
 		font_path = 'fonts/RobotoMono-Regular.ttf'
