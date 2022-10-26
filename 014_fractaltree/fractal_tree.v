@@ -1,11 +1,6 @@
-// A double pendulum following the Coding Challenge #95 by
-// the Coding Train.
-// Draws a square canvas with pendulums, one attached
-// to the other, showing stunning chaotic movements.
-// You may press 'k' to give the pendulum a good
-// kick, because the dampening will cause it to stop after
-// a while.
-// Written by Stefan Schroeder in 2021 for the v project examples.
+// A fractal tree generator following the Coding Challenge #14
+// by the Coding Train.
+// Written by Stefan Schroeder in 2022.
 // See LICENSE for license information.
 import os
 import gg
@@ -14,30 +9,23 @@ import math
 
 const (
 	center      = 350
-	g           = 0.1 // gravity constant
-	// The dampening is necessary to avoid that rounding
-	// errors will add infinite energy into the system.
-	dampening   = 0.999
-	trail_lenth = 250
-	hand_color        = gx.black
 )
 
-struct Pendulum {
-mut:
-	r   f32 // radius, arm length
-	m   f32 // mass
-	a   f32 // angle
-	rd  f32 // radius of blob
-	x   f32 // x-coord computed value
-	y   f32 // y-coord computed value
-	v   f32 // velocity computed
-	acc f32 // acceleration computed
-}
-
-// A Dot is used to store an array of tiny marks for the trail.
-struct Dot {
+struct Vec {
 	x f32
 	y f32
+}
+
+fn (a Vec) str() string {
+	return '{$a.x, $a.y}'
+}
+
+fn (a Vec) + (b Vec) Vec {
+	return Vec{a.x + b.x, a.y + b.y}
+}
+
+fn (a Vec) - (b Vec) Vec {
+	return Vec{a.x - b.x, a.y - b.y}
 }
 
 struct App {
@@ -45,14 +33,25 @@ mut:
 	gg        &gg.Context = unsafe { 0 }
 	draw_flag bool        = true
 	// constants define the initial state.
-	p1      Pendulum = Pendulum{100, 0.2, 0, 10, 0, 0, 0.08, 0}
-	p2      Pendulum = Pendulum{100, 0.2, 0, 10, 0, 0, -0.05, 0}
-	dots    [trail_lenth]Dot = [trail_lenth]Dot{}
-	counter int
 	dpi_scale f32 = 1.0
-	//hour_hand   []f32 = [f32(250), 250, 300, 250, 300, 300, 250, 300, 250, 300]
-	hour_hand   []f32 = [f32(250), 250, 255, 250, 255, 300, 250, 300, 250, 300]
 	appangle f32 = 0.0
+	x0 int = 0
+	y0 int = 0
+	angle f32 = 0.0
+}
+
+// returns the non-offset end of the line 
+fn stick(mut app App, offset Vec, length f32, angle int) {
+	if length < 5 {
+		return 
+	}
+	rv := rotate_vev( Vec{ 0, length }, angle ) 
+	newv := Vec { offset.x + rv.x, offset.y + rv.y}
+	app.gg.draw_line(offset.x, 2*center - offset.y, newv.x, 2 * center - newv.y, gx.black)
+
+	stick(mut app, newv, length*0.75, angle + 10)
+	stick(mut app, newv, length*0.75, angle - 10)
+
 }
 
 fn on_frame(mut app App) {
@@ -62,36 +61,21 @@ fn on_frame(mut app App) {
 
 	app.gg.begin()
 
-	//app.gg.draw_line(350, 2*350, 350, center,  gx.black)
-	app.gg.draw_line(0, 0, 200, 250,  gx.black)
-	//i := f32(3) + f32(17) / 60.0
-	draw_convex_poly_rotate(mut app.gg, 200, 250, app.dpi_scale, app.hour_hand, hand_color, app.appangle)
+	o := Vec{center, 0}
+	stick(mut app, o, 100, 0)
 
 	app.gg.end()
 
-	app.counter++
-	// Make counter reset to avoid overflow and feature the limitation
-	// of the trail.
-	app.counter = app.counter % trail_lenth
 }
 
-[manualfree]
-fn draw_convex_poly_rotate(mut ctx gg.Context, centerx f32, centery f32, dpi_scale f32, points []f32, c gx.Color, angle f32) {
+fn rotate_vev(v Vec, angle f32) (Vec) {
 	sa := math.sin(math.pi * angle / 180.0)
 	ca := math.cos(math.pi * angle / 180.0)
-
-	mut rotated_points := []f32{cap: points.len}
-	for i := 0; i < points.len / 2; i++ {
-		x := points[2 * i]
-		y := points[2 * i + 1]
-		xn := f32((x - centerx) * ca - (y - centery) * sa)
-		yn := f32((x - centerx) * sa + (y - centery) * ca)
-		rotated_points << (xn + centerx) * dpi_scale
-		rotated_points << (yn + centery) * dpi_scale
-	}
-	ctx.draw_convex_poly(rotated_points, c)
-	unsafe { rotated_points.free() }
+	xn := f32(v.x * ca - v.y * sa)
+	yn := f32(v.x * sa + v.y * ca)
+	return Vec{ xn, yn }
 }
+
 
 fn (mut app App) resize() {
 	size := gg.window_size()
@@ -126,10 +110,6 @@ fn on_event(e &gg.Event, mut app App) {
 					}
 					.e {
 						app.appangle -= 5.0
-					}
-					.k {
-						println('Kick!')
-						app.p1.v += 0.1
 					}
 					else {}
 				}
