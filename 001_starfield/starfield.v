@@ -25,7 +25,7 @@ mut:
 
 struct App {
 mut:
-	gg        &gg.Context = 0
+	gg        &gg.Context = unsafe{ 0 }
 	draw_flag bool        = true
 	stars     []Star      = []Star{}
 }

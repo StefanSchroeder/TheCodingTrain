@@ -26,7 +26,7 @@ to external solutions.
 - [X] CC_003_Snake_game solved by https://github.com/vlang/v/tree/master/examples/snek
 - [X] CC_004_PurpleRain
 - [ ] CC_005_Space_invaders
-- [ ] CC_006_Mitosis
+- [X] CC_006_Mitosis
 - [ ] CC_007_SolarSystemGenerator
 - [ ] CC_008_SolarSystemGenerator3D
 - [ ] CC_009_SolarSystemGenerator3D_texture
@@ -64,18 +64,18 @@ to external solutions.
 - [ ] CC_037_diastic
 - [ ] CC_038_word_interactor/P5
 - [ ] CC_039_madlibs/P5
-- [X] CC_040.1_wordcounts
+- [X] CC_040.1_wordcounts or here https://github.com/vlang/v/tree/master/examples/word_counter
 - [ ] CC_040.3_tf-idf/P5
 - [ ] CC_041_ClappyBird
 - [ ] CC_042.1_markov-chain
 - [ ] CC_042.2_markov-chain-names
-- [ ] CC_043_ContextFreeGrammar/P5
-- [ ] CC_044_afinn111SentimentAnalysis/P5
-- [ ] CC_045_FirebaseSavingDrawing/P5
+- [ ] CC_043_ContextFreeGrammar
+- [ ] CC_044_afinn111SentimentAnalysis
+- [ ] CC_045_FirebaseSavingDrawing
 - [ ] CC_046_Asteroids
 - [ ] CC_047_PixelSorting
 - [ ] CC_048_TweetsByMonth
-- [ ] CC_049_ObamaMosaic/Processing/CC_049_ObamaMosaic
+- [ ] CC_049_ObamaMosaic
 - [ ] CC_050.1_CirclePackingAnimated
 - [ ] CC_050.2_CirclePackingImage
 - [ ] CC_051_astar
@@ -83,22 +83,22 @@ to external solutions.
 - [ ] CC_053_random_walk_levy
 - [ ] CC_054.1_StarPatterns
 - [ ] CC_054.2_StarPatterns/P5
-- [ ] CC_055_Roses
+- [X] CC_055_Roses
 - [ ] CC_056_attraction_repulsion
 - [ ] CC_057_Earthquake_Viz
 - [ ] CC_058_EarthQuakeViz3D
 - [ ] CC_059_Steering_Text_Paths/P5
 - [ ] CC_060_Butterfly_Wings
 - [ ] CC_061_fractal_spirograph
-- [ ] CC_062_plinko/P5
-- [ ] CC_063_unikitty_flag/Processing/CC_063_unikitty_flag
+- [ ] CC_062_plinko
+- [ ] CC_063_unikitty_flag
 - [ ] CC_064.1_ForwardKinematics
 - [ ] CC_064.2_InverseKinematics
 - [ ] CC_064.3_InverseKinematics_fixed
 - [ ] CC_064.4_InverseKinematics_array
 - [ ] CC_065.1_binary_tree
 - [ ] CC_065.2_binary_tree_viz
-- [ ] CC_066_timer/P5
+- [ ] CC_066_timer
 - [ ] CC_067_Pong
 - [ ] CC_068_BFS_kevin_bacon/P5
 - [ ] CC_069_steering_evolution
@@ -109,16 +109,16 @@ to external solutions.
 - [ ] CC_072_Frogger
 - [ ] CC_073_Acrostic/P5
 - [X] CC_074_Clock solved by https://github.com/vlang/v/blob/master/examples/clock/clock.v
-- [ ] CC_075_Wikipedia/P5
+- [ ] CC_075_Wikipedia
 - [ ] CC_076_10PRINT
 - [ ] CC_077_Recursion
 - [ ] CC_078_Simple_Particle_System
-- [ ] CC_079_Number_Guessing_Chatbot/P5
-- [ ] CC_080_Voice_Chatbot_with_p5.Speech/P5
+- [ ] CC_079_Number_Guessing_Chatbot
+- [ ] CC_080_Voice_Chatbot_with_p5.Speech
 - [ ] CC_081.1_Circle_Morphing_Part_1
 - [ ] CC_081.2_Circle_Morphing_Part_2
-- [ ] CC_082_Image_Chrome_Extension_The_Ex-Kitten-sion/JavaScript
-- [ ] CC_083_Chrome_Extension_with_p5js_Sketch/JavaScript
+- [ ] CC_082_Image_Chrome_Extension_The_Ex-Kitten-sion
+- [ ] CC_083_Chrome_Extension_with_p5js_Sketch
 - [ ] CC_084_Word_Definition_Extension/JavaScript
 - [X] CC_085_The_Game_of_Life
 - [ ] CC_086_beesandbombs
