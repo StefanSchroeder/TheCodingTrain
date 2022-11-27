@@ -20,7 +20,7 @@ const (
 struct App {
 mut:
 	gen       int
-	gg        &gg.Context = 0
+	gg        &gg.Context = unsafe{0}
 	draw_flag bool        = true
 	grid      [][][]byte  = [][][]byte{len: xsize, init: [][]byte{len: ysize, init: []byte{len: 2}}}
 }

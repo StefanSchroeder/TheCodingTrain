@@ -24,7 +24,7 @@ const (
 struct App {
 mut:
 	gen       int // generation counter
-	gg        &gg.Context = 0
+	gg        &gg.Context = unsafe{0}
 	draw_flag bool        = true
 	grid      [][]u8    = [][]u8{len: xsize, init: []u8{len: ysize}}
 	x         int // x-position of ant

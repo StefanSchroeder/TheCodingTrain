@@ -24,7 +24,7 @@ mut:
 
 struct App {
 mut:
-	gg        &gg.Context = 0
+	gg        &gg.Context = unsafe {0}
 	draw_flag bool        = true
 	drops     []Drop      = []Drop{}
 	dropcolor gx.Color    = gx.Color{139, 43, 226, 255}

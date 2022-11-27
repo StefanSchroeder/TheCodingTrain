@@ -118,7 +118,7 @@ fn on_init(mut app App) {
 	app.resize()
 
 	app.gen = 0
-	for i in 0 .. app.number_of_initial_cells {
+	for _ in 0 .. app.number_of_initial_cells {
 		x := rand.int_in_range(0, 2*center) or { return }
 		y := rand.int_in_range(0, 2*center) or { return }
 		app.cells << Cell{ x, y, radius }

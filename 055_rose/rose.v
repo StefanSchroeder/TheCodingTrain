@@ -14,7 +14,7 @@ const (
 
 struct App {
 mut:
-	gg        &gg.Context = 0
+	gg        &gg.Context = unsafe{0}
 	draw_flag bool        = true
 	numbers   []f32       = []f32{cap: 1000}
 	count     int

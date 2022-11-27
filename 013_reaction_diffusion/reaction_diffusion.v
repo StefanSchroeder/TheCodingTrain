@@ -23,7 +23,7 @@ mut:
 struct App {
 mut:
 	gen       int
-	gg        &gg.Context = 0
+	gg        &gg.Context = unsafe{0}
 	draw_flag bool        = true
 	grid      [][][]Dot   = [][][]Dot{len: xsize, init: [][]Dot{len: ysize, init: []Dot{len: 2}}}
 }

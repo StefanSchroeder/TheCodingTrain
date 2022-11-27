@@ -41,7 +41,7 @@ struct Dot {
 
 struct App {
 mut:
-	gg        &gg.Context = 0
+	gg        &gg.Context = unsafe{0}
 	draw_flag bool        = true
 	// constants define the initial state.
 	p1      Pendulum = Pendulum{100, 0.2, 0, 10, 0, 0, 0.08, 0}

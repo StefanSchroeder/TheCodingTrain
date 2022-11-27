@@ -14,7 +14,7 @@ const (
 
 struct App {
 mut:
-	gg        &gg.Context = 0
+	gg        &gg.Context = unsafe{0}
 	draw_flag bool        = true
 	cx        f64 = 0.0
 	cy        f64 = 0.0
