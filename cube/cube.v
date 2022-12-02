@@ -283,8 +283,8 @@ fn frame(mut app App) {
 	// sgl.defaults()
 
 	// 2d triangle
-	sgl.viewport(x0, y0, ww, hh, true)
-	draw_triangle()
+	///sgl.viewport(x0, y0, ww, hh, true)
+	//draw_triangle()
 
 	// colored cubes with viewport
 	sgl.viewport(x0, y1, ww, hh, true)
