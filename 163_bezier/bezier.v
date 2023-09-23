@@ -7,10 +7,8 @@ import gx
 import rand
 
 const (
-	xsize      = 100 // number of cells in x direction
-	xscale     = 5 // size of one cell square
-	ysize      = 100
-	yscale     = 5
+	xsize      = 500 // number of cells in x direction
+	ysize      = 500
 	show_every = 15 // display every n-th frame
 )
 
@@ -36,14 +34,7 @@ fn on_frame(mut app App) {
 
 	if app.gen % show_every == 0 {
 		app.gg.begin()
-		/*for i in 0 .. xsize {
-			for j in 0 .. ysize {
-				if app.grid[i][j] == 1 {
-					app.gg.draw_rect_filled(i * xscale, j * yscale, xscale, yscale, gx.white)
-				}
-			}
-		}*/
-		points := [f32(0), yscale*ysize/2, app.rax, app.ray, app.rbx, app.rby, xscale*xsize, yscale*ysize/2]
+		points := [f32(0), ysize/2, app.rax, app.ray, app.rbx, app.rby, xsize, ysize/2]
 		app.gg.draw_cubic_bezier(points,  gx.white)
 		app.gg.draw_rect_filled(app.rax, app.ray, 2, 2, gx.white)
 		app.gg.draw_rect_filled(app.rbx, app.rby, 2, 2, gx.white)
@@ -129,15 +120,10 @@ fn on_init(mut app App) {
 	app.y = ysize / 2
 	app.dir = 0
 
-	app.rax = xscale*xsize / 3
-	app.ray = yscale*ysize / 3
-	app.rbx = xscale*2*xsize / 3
-	app.rby = yscale*2*ysize / 3
-	/*for i in 0 .. xsize {
-		for j in 0 .. ysize {
-			app.grid[i][j] = 0
-		}
-	}*/
+	app.rax = xsize / 3
+	app.ray = ysize / 3
+	app.rbx = 2*xsize / 3
+	app.rby = 2*ysize / 3
 }
 
 // is needed for easier diagnostics on windows
@@ -152,8 +138,8 @@ fn main() {
 	mut app := &App{}
 
 	app.gg = gg.new_context(
-		width: xsize * xscale
-		height: ysize * yscale
+		width: xsize
+		height: ysize
 		window_title: "Random walk"
 		bg_color: gx.black
 		user_data: app
